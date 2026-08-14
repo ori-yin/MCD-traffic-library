@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT-traffic 图书馆</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="/static/mcdonalds.svg" alt="" class="mcd-logo">
+      <span class="brand-text">IT-traffic 图书馆</span>
+    </div>
+    <div class="brand-sub">Daily Report Archive</div>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <section class="tb tb-cal card">
+        <div class="cal-header">
+          <button id="cal-prev" type="button" aria-label="上月">&lsaquo;</button>
+          <span id="cal-label">--</span>
+          <button id="cal-next" type="button" aria-label="下月">&rsaquo;</button>
+        </div>
+        <div class="cal-weekdays">
+          <span>一</span><span>二</span><span>三</span><span>四</span>
+          <span>五</span><span>六</span><span>日</span>
+        </div>
+        <div id="cal-grid" class="cal-grid"></div>
+      </section>
+
+      <section class="tb tb-up card">
+        <h3>上传日报</h3>
+        <div class="upload-row">
+          <label>部门 <select id="up-dept"></select></label>
+          <label>日期 <input type="date" id="up-date"></label>
+        </div>
+        <div id="up-zone" class="up-zone">
+          <p class="up-hint">把 HTML 拖到这里</p>
+          <p class="up-or">或 <button type="button" id="up-pick">点选文件</button></p>
+          <input type="file" id="up-file" accept=".html,text/html" hidden>
+        </div>
+        <p id="up-status" class="up-status"></p>
+      </section>
+
+      <section class="tb tb-list card">
+        <div class="list-toolbar">
+          <h3 id="list-title">请选择日期</h3>
+          <select id="filter-dept" class="filter-dept" title="按部门筛选">
+            <option value="">全部部门</option>
+          </select>
+        </div>
+        <ul id="report-list"></ul>
+      </section>
+    </div>
+
+    <section class="preview card">
+      <div class="report-meta" id="report-meta">
+        <span class="meta-empty">选择左侧日报开始预览</span>
+      </div>
+      <iframe id="report-frame" sandbox="allow-scripts" title="日报预览"></iframe>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
