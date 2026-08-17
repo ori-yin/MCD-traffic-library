@@ -6,6 +6,8 @@
   --brand-yellow-dark: #E5A800;
   --brand-green: #2E7D32;
   --brand-blue: #005DAA;
+  --brand-purple: #8E44AD;
+  --brand-gray: #6C757D;
 
   --bg: #FAFAFA;
   --card: #FFFFFF;
@@ -100,21 +102,35 @@ main {
 .cal-day:hover:not(.empty) { background: #FFF8E1; border-color: var(--brand-yellow); }
 .cal-day.empty { cursor: default; background: transparent; }
 .cal-day.today { border-color: var(--brand-yellow-dark); font-weight: 700; color: var(--brand-yellow-dark); }
-.cal-day.has-report::after {
-  content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
-  width: 4px; height: 4px; border-radius: 50%; background: var(--brand-red);
+.cal-day.has-report::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 78%; height: 78%;
+  border-radius: 50%;
+  background: var(--brand-red);
+  z-index: 0;
+}
+.cal-day.has-report .day-num {
+  position: relative;
+  z-index: 1;
+  color: var(--brand-yellow);
+  font-weight: 700;
 }
 .cal-day .day-num { line-height: 1; }
 .cal-day .day-count {
-  font-size: 9px; line-height: 1; margin-top: 2px;
+  position: absolute; top: 1px; right: 1px;
+  min-width: 14px; height: 14px;
   background: var(--brand-red); color: #fff;
-  border-radius: 7px; padding: 1px 4px; font-weight: 700;
+  border-radius: 7px; padding: 0 4px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 9px; line-height: 1; font-weight: 700;
 }
 .cal-day.selected {
   background: var(--brand-red); color: #fff; border-color: var(--brand-red);
   box-shadow: 0 2px 6px rgba(218, 41, 28, 0.35);
 }
-.cal-day.selected.has-report::after { background: var(--brand-yellow); }
 .cal-day.selected .day-count { background: var(--brand-yellow); color: var(--brand-red-dark); }
 .cal-day.selected.today { color: #fff; }
 
@@ -145,6 +161,8 @@ main {
 }
 .up-zone p { margin: 3px 0; }
 .up-zone .up-hint { font-weight: 600; color: var(--text-soft); }
+.up-date-row { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.up-hint-auto { font-size: 11px; color: var(--brand-green); font-weight: 600; white-space: nowrap; }
 .up-zone button {
   background: none; border: none; color: var(--brand-red);
   font-size: 12px; cursor: pointer; text-decoration: underline; padding: 0; font-weight: 600;
@@ -201,9 +219,22 @@ main {
 .dept-3PO { background: var(--brand-red); color: #fff; }
 .dept-CNN { background: var(--brand-yellow); color: var(--brand-red-dark); }
 .dept-OC  { background: var(--brand-green); color: #fff; }
+.dept-社媒 { background: var(--brand-purple); color: #fff; }
+.dept-其他 { background: var(--brand-gray); color: #fff; }
 .dept-default { background: var(--brand-blue); color: #fff; }
 .report-item .title { font-size: 12.5px; font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .report-item .time { font-size: 10px; color: var(--text-muted); }
+.del-btn {
+  position: absolute; top: 2px; right: 2px;
+  width: 18px; height: 18px;
+  background: transparent; border: 0; cursor: pointer;
+  color: var(--text-muted); font-size: 16px; line-height: 1;
+  border-radius: 3px; padding: 0;
+  opacity: 0;
+  transition: opacity 0.15s, background-color 0.15s, color 0.15s;
+}
+.report-item:hover .del-btn { opacity: 1; }
+.del-btn:hover { background: var(--brand-red); color: #fff; }
 .report-item-empty {
   padding: 20px 10px; text-align: center; color: var(--text-muted); font-size: 12px;
   border: 1px dashed var(--border-strong); border-radius: 6px;

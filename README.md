@@ -1,9 +1,12 @@
-# mcd-report-archive
+# MCD-traffic-library
 
 IT-traffic 图书馆 — 按日历浏览、拖拽上传、按部门归档 HTML 日报。
 
 ## 快速上手
 
+双击 `setup_and_run.bat`（自动建 venv + 装依赖 + 建表 + 启动）。
+
+或手动：
 ```bash
 # 1. 装依赖
 pip install -r requirements.txt
@@ -52,7 +55,7 @@ uvicorn app.main:app --port 8001
 ## 项目结构
 
 ```
-mcd-report-archive/
+mcd-report-archive/                # 本地目录 (OneDrive 锁暂未改; GitHub 仓库已改名为 MCD-traffic-library)
 ├── app/
 │   ├── main.py        FastAPI 入口 + 路由
 │   ├── config.py      配置（部门列表、路径、限制）
@@ -77,7 +80,7 @@ mcd-report-archive/
 
 `app/config.py` 维护：
 ```python
-DEPARTMENTS = ["3PO", "CNN", "OC"]
+DEPARTMENTS = ["3PO", "CNN", "OC", "社媒", "其他"]
 ```
 加部门改这一行即可，前端下拉 / 后端校验会自动跟随。
 

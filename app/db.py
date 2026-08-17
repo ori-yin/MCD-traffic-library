@@ -78,3 +78,19 @@ def get_report_by_id(report_id: int) -> dict | None:
             "SELECT * FROM reports WHERE id=?", (report_id,)
         ).fetchone()
     return dict(row) if row else None
+
+
+def delete_report(report_id: int) -> dict | None:
+    """硬删除日报: DB 行 + 文件; 返回被删元数据 (供日志)"""
+    row = get_report_by_id(report_id)
+    if not row:
+        return None
+    with connect() as conn:
+        conn.execute("DELETE FROM reports WHERE id=?", (report_id,))
+        conn.commit()
+    full = config.BASE_DIR / row["filepath"]
+    try:
+        full.unlink()
+    except FileNotFoundError:
+        pass
+    return row

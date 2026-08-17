@@ -1,4 +1,6 @@
 """FastAPI 应用入口"""
+import json
+from datetime import datetime
 from pathlib import Path
 
 from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
@@ -8,6 +10,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from app import config, storage
 from app.db import (
+    delete_report,
     get_report_by_id,
     insert_report,
     query_calendar,
@@ -101,3 +104,32 @@ async def api_upload(
     rel = storage.relative_to_base(full)
     rid = insert_report(date, department, title, filename, rel)
     return {"id": rid, "title": title, "filename": filename, "filepath": rel}
+
+
+@app.delete("/api/reports/{report_id}")
+def api_delete_report(
+    report_id: int,
+    deleted_by: str = Form(...),
+    deleted_reason: str = Form(""),
+):
+    """硬删除日报: 写日志 + 删文件 + 删 DB 行"""
+    deleted_by = deleted_by.strip()
+    if not deleted_by:
+        raise HTTPException(422, "deleted_by required")
+    row = delete_report(report_id)
+    if not row:
+        raise HTTPException(404, "report not found")
+    log_path = config.DATA_DIR / "delete_log.jsonl"
+    entry = {
+        "report_id": row["id"],
+        "title": row["title"],
+        "filename": row["filename"],
+        "department": row["department"],
+        "report_date": row["report_date"],
+        "deleted_by": deleted_by,
+        "deleted_reason": deleted_reason.strip(),
+        "deleted_at": datetime.now().isoformat(timespec="seconds"),
+    }
+    with log_path.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    return {"deleted": row["id"], "deleted_by": deleted_by}

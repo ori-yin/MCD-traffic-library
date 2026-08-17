@@ -5,7 +5,13 @@ __pycache__/
 
 # 数据: SQLite + 用户上传的 HTML (不进版本库)
 data/archive.db
+data/archive.db-shm
+data/archive.db-wal
 data/reports/
+data/delete_log.jsonl
+
+# 虚拟环境
+venv/
 
 # IDE
 .vscode/

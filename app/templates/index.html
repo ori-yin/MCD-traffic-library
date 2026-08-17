@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IT-traffic 图书馆</title>
+  <link rel="icon" href="/static/MCD.ico" type="image/x-icon">
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
@@ -33,13 +34,13 @@
       <section class="tb tb-up card">
         <h3>上传日报</h3>
         <div class="upload-row">
-          <label>部门 <select id="up-dept"></select></label>
-          <label>日期 <input type="date" id="up-date"></label>
+          <label class="up-date-row">部门 <select id="up-dept"></select><span id="up-dept-hint" class="up-hint-auto" hidden></span></label>
+          <label class="up-date-row">日期 <input type="date" id="up-date"><span id="up-date-hint" class="up-hint-auto" hidden></span></label>
         </div>
         <div id="up-zone" class="up-zone">
           <p class="up-hint">把 HTML 拖到这里</p>
           <p class="up-or">或 <button type="button" id="up-pick">点选文件</button></p>
-          <input type="file" id="up-file" accept=".html,text/html" hidden>
+          <input type="file" id="up-file" accept=".html,text/html" hidden multiple>
         </div>
         <p id="up-status" class="up-status"></p>
       </section>
